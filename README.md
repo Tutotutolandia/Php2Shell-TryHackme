@@ -58,7 +58,12 @@ Antes de ejecutar el ataque, la metodología exige confirmar las versiones y el 
   * **Por qué se usa:** Sirve como transición entre la fase de reconocimiento y la de explotación. Verifica el directorio de trabajo donde se aloja el *exploit* público en Python y sus recursos auxiliares, listos para ser utilizados.
 
 > **Evidencias Tarea 4:** 
-> *[Inserta aquí las capturas de tu consola mostrando la ejecución de `docker ps`, `php -v`, la lectura del `index.php` y el listado `ls` del directorio del exploit]*
+![Verificación de contenedores](evidencias/docker_ps.png)
+
+![Respuesta curl index](evidencias/curl_index.png)
+![Validación con docker exec](evidencias/docker_exec.png)
+
+![Directorio del exploit](evidencias/ls_directorio.png)
 
 ### Tareas 5 y 6: Defeating ASLR & Remote Code Execution
 Al ejecutar el *script* automatizado proporcionado en el entorno, se desencadena toda la cadena del ataque.
@@ -80,8 +85,12 @@ Al ejecutar el *script* automatizado proporcionado en el entorno, se desencadena
   ```
   * **Por qué se usa:** Una vez confirmado el vector de ejecución, le pasamos como argumento un comando específico al script. Debido al pequeño tamaño del *payload* (sólo se disponen de 14 bytes para la inyección de comandos), le ordenamos que lea el contenido del archivo de la flag (ubicado en `/f`) y lo redirija a un directorio compartido (`out/flag.txt`) para poder visualizarlo desde nuestro usuario de bajos privilegios.
 
-> **Evidencias Tareas 5 y 6:** 
-> *[Inserta aquí las capturas de pantalla de la terminal mostrando el bypass de ASLR, la ejecución del comando `id` y la flag resultante obtenida del archivo `flag.txt`]*
+> **Evidencias Tareas 5 y 6:**
+![Ejecución del exploit](evidencias/cd_exploit.png)
+
+![Obtención de la flag](evidencias/flag1.png)
+
+![Sala de TryHackMe completada](evidencias/room_completada.png)
 
 ---
 
