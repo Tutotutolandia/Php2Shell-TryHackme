@@ -29,7 +29,7 @@ Antes de ejecutar el ataque, la metodología exige confirmar las versiones y el 
 
 * **Verificación de contenedores activos:**
   ```bash
-  docker ps
+  docker ps --format '{{.Names}}  {{.Image}}  {{.Status}}'
   ```
   * **Por qué se usa:** Este comando lista los contenedores en ejecución en la máquina. Sirve para identificar cómo se llama nuestro objetivo. 
   * **Explicación para el informe:** Al ejecutarlo, descubrimos un contenedor llamado `php2shell-target` que está exponiendo el servicio en el puerto local `8088`.
@@ -76,14 +76,14 @@ Al ejecutar el *script* automatizado proporcionado en el entorno, se desencadena
   ```
 * **Ejecución del Exploit de prueba:** 
   ```bash
-  python3 exploit.py
+  python3 exploit.py -u http://127.0.0.1:8088/index.php
   ```
   * **Por qué se usa:** El script bombardea al servidor con peticiones pesadas tipo *multipart/form-data* hasta forzar el *bailout* por falta de memoria. Al no colocarle ningún parámetro de comando, el script extrae la memoria filtrada (saltándose el ASLR) y luego lanza por defecto el comando `id` a nivel de sistema operativo.
   * **Resultado:** En la terminal se observa cómo se filtran las direcciones de memoria y finalmente la consola devuelve el output de `uid=33(www-data)`, lo que confirma exitosamente el **RCE**.
 
 * **Obtención de la Flag:** 
   ```bash
-  python3 exploit.py "cat /f > out/flag.txt"
+   python3 exploit.py -u http://127.0.0.1:8088/index.php -c 'cat /f>/out/p1' --proof-file out/p1
   ```
   * **Por qué se usa:** Una vez confirmado el vector de ejecución, le pasamos como argumento un comando específico al script. Debido al pequeño tamaño del *payload* (sólo se disponen de 14 bytes para la inyección de comandos), le ordenamos que lea el contenido del archivo de la flag (ubicado en `/f`) y lo redirija a un directorio compartido (`out/flag.txt`) para poder visualizarlo desde nuestro usuario de bajos privilegios.
 
